@@ -332,5 +332,8 @@
     },
     "twig/extra-bundle": {
         "version": "v3.29.0"
+    },
+    "yoerioptr/tabt-api-bundle": {
+        "version": "dev-main"
     }
 }
