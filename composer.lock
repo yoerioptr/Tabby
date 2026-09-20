@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6aea6042287887508be3a1c18cb534f",
+    "content-hash": "af7bf7252e20e5bc11d1bc37ba88d9f0",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -7290,16 +7290,16 @@
         },
         {
             "name": "symfony/stimulus-bundle",
-            "version": "v3.5.0",
+            "version": "v3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stimulus-bundle.git",
-                "reference": "c5ed7b61ba5dd53c1e31e9894a3a293d9285977b"
+                "reference": "328b92cdf33a21267ee47904f8f5e330da356ce6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/stimulus-bundle/zipball/c5ed7b61ba5dd53c1e31e9894a3a293d9285977b",
-                "reference": "c5ed7b61ba5dd53c1e31e9894a3a293d9285977b",
+                "url": "https://api.github.com/repos/symfony/stimulus-bundle/zipball/328b92cdf33a21267ee47904f8f5e330da356ce6",
+                "reference": "328b92cdf33a21267ee47904f8f5e330da356ce6",
                 "shasum": ""
             },
             "require": {
@@ -7342,7 +7342,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/symfony/stimulus-bundle/tree/v3.5.0"
+                "source": "https://github.com/symfony/stimulus-bundle/tree/v3.5.1"
             },
             "funding": [
                 {
@@ -7362,7 +7362,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-19T11:07:10+00:00"
+            "time": "2026-09-19T11:40:16+00:00"
         },
         {
             "name": "symfony/stopwatch",
@@ -7971,16 +7971,16 @@
         },
         {
             "name": "symfony/ux-turbo",
-            "version": "v3.5.0",
+            "version": "v3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ux-turbo.git",
-                "reference": "f5334d4aa63e14086f61e332edc042583945a4ba"
+                "reference": "9a125fad60c75411b9b46478a927588d3e3bab2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ux-turbo/zipball/f5334d4aa63e14086f61e332edc042583945a4ba",
-                "reference": "f5334d4aa63e14086f61e332edc042583945a4ba",
+                "url": "https://api.github.com/repos/symfony/ux-turbo/zipball/9a125fad60c75411b9b46478a927588d3e3bab2d",
+                "reference": "9a125fad60c75411b9b46478a927588d3e3bab2d",
                 "shasum": ""
             },
             "require": {
@@ -8048,7 +8048,7 @@
                 "turbo-stream"
             ],
             "support": {
-                "source": "https://github.com/symfony/ux-turbo/tree/v3.5.0"
+                "source": "https://github.com/symfony/ux-turbo/tree/v3.5.1"
             },
             "funding": [
                 {
@@ -8068,7 +8068,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-19T11:07:10+00:00"
+            "time": "2026-09-19T11:40:16+00:00"
         },
         {
             "name": "symfony/validator",
@@ -8823,29 +8823,26 @@
         },
         {
             "name": "yoerioptr/tabt-api-client",
-            "version": "v2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yoerioptr/TabtApiClient.git",
-                "reference": "5387eb22fbcea563bcb410366b352dfc06175bb5"
+                "reference": "181b688553eae3210645a3f3ebae5608ab5ebd71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yoerioptr/TabtApiClient/zipball/5387eb22fbcea563bcb410366b352dfc06175bb5",
-                "reference": "5387eb22fbcea563bcb410366b352dfc06175bb5",
+                "url": "https://api.github.com/repos/yoerioptr/TabtApiClient/zipball/181b688553eae3210645a3f3ebae5608ab5ebd71",
+                "reference": "181b688553eae3210645a3f3ebae5608ab5ebd71",
                 "shasum": ""
             },
             "require": {
                 "composer/composer": "^2.1.9",
                 "ext-soap": "*",
-                "php": ">=7.4"
+                "php": ">=8.4"
             },
             "require-dev": {
-                "monolog/monolog": "^2.3",
-                "phpro/grumphp": "^1.7",
-                "phpstan/phpstan": "^1.4",
-                "squizlabs/php_codesniffer": "^3.4",
-                "symfony/var-dumper": "^6.0"
+                "friendsofphp/php-cs-fixer": "^3.95",
+                "phpunit/phpunit": "^10.5 || ^11.0 || ^12.0"
             },
             "type": "library",
             "autoload": {
@@ -8866,9 +8863,9 @@
             "description": "Helper library for the TabT API by Frenoy. For more information visit 'http://api.frenoy.net/'",
             "support": {
                 "issues": "https://github.com/yoerioptr/TabtApiClient/issues",
-                "source": "https://github.com/yoerioptr/TabtApiClient/tree/v2.1.0"
+                "source": "https://github.com/yoerioptr/TabtApiClient/tree/2.2.0"
             },
-            "time": "2025-11-12T16:29:26+00:00"
+            "time": "2026-09-20T06:52:31+00:00"
         }
     ],
     "packages-dev": [
