@@ -7,13 +7,13 @@ namespace App\Menu;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 
-final readonly class Builder
+final readonly class MenuBuilder
 {
-    public function mainMenu(FactoryInterface $factory, array $options): ItemInterface
+    public function createMainMenu(FactoryInterface $factory): ItemInterface
     {
         $menu = $factory->createItem('root');
 
-        $menu->addChild('Home', ['route' => 'homepage']);
+        $menu->addChild('Home', ['route' => 'app_tabt_test']);
 
         return $menu;
     }
