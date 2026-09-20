@@ -1,0 +1,3 @@
+tabt_api:
+    username: "%env(TABT_USERNAME)%"
+    password: "%env(TABT_PASSWORD)%"
