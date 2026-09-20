@@ -47,6 +47,9 @@
             "migrations/.gitignore"
         ]
     },
+    "knplabs/knp-menu-bundle": {
+        "version": "v3.7.0"
+    },
     "phpunit/phpunit": {
         "version": "13.3",
         "recipe": {
