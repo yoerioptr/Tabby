@@ -1,0 +1,9 @@
+{% extends 'knp_menu_base.html.twig' %}
+
+{% import 'menu/_macros.html.twig' as menu %}
+
+{% block root %}
+    {% for child in item.children %}
+        <li>{{ menu.nav_link(child, matcher.isCurrent(child))|raw }}</li>
+    {% endfor %}
+{% endblock %}
