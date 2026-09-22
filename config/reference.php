@@ -1501,6 +1501,19 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  * @psalm-type TabtApiConfig = array{
  *     username?: scalar|Param|null, // Default: null
  *     password?: scalar|Param|null, // Default: null
+ *     doctrine?: array{
+ *         mappings?: array<string, array{ // Default: []
+ *             entity?: scalar|Param|null,
+ *             identifier?: scalar|Param|null, // Default: "id"
+ *             source?: array{
+ *                 repository?: scalar|Param|null,
+ *                 method?: scalar|Param|null,
+ *                 entries?: scalar|Param|null,
+ *                 parameters?: array<string, scalar|Param|null>,
+ *             },
+ *             fields?: array<string, scalar|Param|null>,
+ *         }>,
+ *     },
  * }
  * @psalm-type KnpMenuConfig = array{
  *     providers?: array{

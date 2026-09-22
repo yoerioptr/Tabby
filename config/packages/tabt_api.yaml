@@ -1,3 +1,21 @@
 tabt_api:
     username: "%env(TABT_USERNAME)%"
     password: "%env(TABT_PASSWORD)%"
+
+    doctrine:
+        mappings:
+            members:
+                entity: App\Entity\Member
+                identifier: id
+                source:
+                    repository: member
+                    method: listMembersBy
+                    entries: getMemberEntries
+                    parameters:
+                        Club: "%env(TABT_CLUB)%"
+                fields:
+                    UniqueIndex: id
+                    FirstName: firstName
+                    LastName: lastName
+                    Ranking: ranking
+                    Club: clubId
