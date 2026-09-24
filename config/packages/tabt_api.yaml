@@ -19,3 +19,27 @@ tabt_api:
                     LastName: lastName
                     Ranking: ranking
                     Club: clubId
+            matches:
+                entity: App\Entity\CompetitionMatch
+                identifier: matchId
+                source:
+                    repository: match
+                    method: listMatchesBy
+                    entries: getTeamMatchesEntries
+                    parameters:
+                        Club: "%env(TABT_CLUB)%"
+                        ShowDivisionName: "yes"
+                fields:
+                    MatchId: matchId
+                    WeekName: weekName
+                    Date: date
+                    Time: time
+                    Venue: venue
+                    HomeClub: homeClub
+                    HomeTeam: homeTeam
+                    AwayClub: awayClub
+                    AwayTeam: awayTeam
+                    Score: score
+                    DivisionId: divisionId
+                    DivisionName: divisionName
+                    IsValidated: isValidated

@@ -1,2 +1,98 @@
 @import "tailwindcss";
 
+/*
+ * react-big-calendar theming: align borders/typography with Tailwind and add
+ * a dark-mode layer (the library ships a light-only stylesheet).
+ */
+.rbc-calendar {
+  font-family: inherit;
+  color: #111827;
+}
+
+.rbc-header {
+  padding: 0.5rem 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.rbc-header,
+.rbc-time-view,
+.rbc-time-header,
+.rbc-time-content,
+.rbc-time-header-content,
+.rbc-header + .rbc-header,
+.rbc-day-bg + .rbc-day-bg,
+.rbc-timeslot-group,
+.rbc-time-content > * + * > * {
+  border-color: #e5e7eb;
+}
+
+.rbc-today {
+  background-color: #eef2ff;
+}
+
+.rbc-off-range-bg {
+  background: #f9fafb;
+}
+
+.rbc-event {
+  border: none;
+}
+
+.rbc-event.rbc-selected {
+  filter: brightness(0.92);
+}
+
+.rbc-show-more {
+  color: #4f46e5;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.rbc-label,
+.rbc-time-gutter .rbc-label {
+  font-size: 0.7rem;
+  color: #6b7280;
+}
+
+@media (prefers-color-scheme: dark) {
+  .rbc-calendar {
+    color: #f9fafb;
+  }
+
+  .rbc-header,
+  .rbc-time-view,
+  .rbc-time-header,
+  .rbc-time-content,
+  .rbc-time-header-content,
+  .rbc-header + .rbc-header,
+  .rbc-day-bg + .rbc-day-bg,
+  .rbc-timeslot-group,
+  .rbc-time-content > * + * > * {
+    border-color: rgb(255 255 255 / 0.1);
+  }
+
+  .rbc-today {
+    background-color: rgb(99 102 241 / 0.15);
+  }
+
+  .rbc-off-range-bg {
+    background: rgb(255 255 255 / 0.03);
+  }
+
+  .rbc-label,
+  .rbc-time-gutter .rbc-label,
+  .rbc-time-slot {
+    color: #9ca3af;
+  }
+
+  .rbc-button-link {
+    color: #e5e7eb;
+  }
+
+  .rbc-show-more {
+    color: #a5b4fc;
+  }
+}
