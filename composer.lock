@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d395fbe93888b2cb07e1706b6a8bff7",
+    "content-hash": "62b8a8851cf1353c09ad9151609e4134",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -405,16 +405,16 @@
         },
         {
             "name": "composer/semver",
-            "version": "3.4.4",
+            "version": "3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "198166618906cb2de69b95d7d47e5fa8aa1b2b95"
+                "reference": "f7a296f4c4cf8cb8bb83e35d6951a406bb11afa5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/198166618906cb2de69b95d7d47e5fa8aa1b2b95",
-                "reference": "198166618906cb2de69b95d7d47e5fa8aa1b2b95",
+                "url": "https://api.github.com/repos/composer/semver/zipball/f7a296f4c4cf8cb8bb83e35d6951a406bb11afa5",
+                "reference": "f7a296f4c4cf8cb8bb83e35d6951a406bb11afa5",
                 "shasum": ""
             },
             "require": {
@@ -456,7 +456,7 @@
                     "homepage": "http://robbast.nl"
                 }
             ],
-            "description": "Semver library that offers utilities, version constraint parsing and validation.",
+            "description": "Version comparison library that offers utilities, version constraint parsing and validation.",
             "keywords": [
                 "semantic",
                 "semver",
@@ -466,7 +466,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/semver/issues",
-                "source": "https://github.com/composer/semver/tree/3.4.4"
+                "source": "https://github.com/composer/semver/tree/3.5.0"
             },
             "funding": [
                 {
@@ -478,7 +478,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-20T19:15:30+00:00"
+            "time": "2026-09-24T14:38:51+00:00"
         },
         {
             "name": "composer/spdx-licenses",
@@ -1502,16 +1502,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "3.7.1",
+            "version": "3.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "037807a39697890dcede8b766c5efe8a1b4855fe"
+                "reference": "6b47a02cd1d7119ef4d8f90ca6d49651accef1a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/037807a39697890dcede8b766c5efe8a1b4855fe",
-                "reference": "037807a39697890dcede8b766c5efe8a1b4855fe",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/6b47a02cd1d7119ef4d8f90ca6d49651accef1a3",
+                "reference": "6b47a02cd1d7119ef4d8f90ca6d49651accef1a3",
                 "shasum": ""
             },
             "require": {
@@ -1535,7 +1535,7 @@
                 "doctrine/coding-standard": "^14.0",
                 "phpbench/phpbench": "^1.0",
                 "phpstan/extension-installer": "^1.4",
-                "phpstan/phpstan": "2.1.23",
+                "phpstan/phpstan": "2.2.14",
                 "phpstan/phpstan-deprecation-rules": "^2",
                 "phpunit/phpunit": "^10.5.0 || ^11.5",
                 "psr/log": "^1 || ^2 || ^3",
@@ -1586,9 +1586,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/3.7.1"
+                "source": "https://github.com/doctrine/orm/tree/3.7.2"
             },
-            "time": "2026-09-14T05:45:59+00:00"
+            "time": "2026-09-23T05:28:00+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -1808,16 +1808,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "6.12.0",
+            "version": "6.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jsonrainbow/json-schema.git",
-                "reference": "8ef236a1a37df364b518b7411a4b5bb95b040d79"
+                "reference": "30de5e9b3fa04253af272a7d932a38cd026c311b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/8ef236a1a37df364b518b7411a4b5bb95b040d79",
-                "reference": "8ef236a1a37df364b518b7411a4b5bb95b040d79",
+                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/30de5e9b3fa04253af272a7d932a38cd026c311b",
+                "reference": "30de5e9b3fa04253af272a7d932a38cd026c311b",
                 "shasum": ""
             },
             "require": {
@@ -1867,9 +1867,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jsonrainbow/json-schema/issues",
-                "source": "https://github.com/jsonrainbow/json-schema/tree/6.12.0"
+                "source": "https://github.com/jsonrainbow/json-schema/tree/6.13.0"
             },
-            "time": "2026-09-04T12:54:20+00:00"
+            "time": "2026-09-23T19:46:42+00:00"
         },
         {
             "name": "knplabs/knp-menu",
@@ -8983,16 +8983,16 @@
         },
         {
             "name": "yoerioptr/tabt-api-client",
-            "version": "2.2.0",
+            "version": "v2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yoerioptr/TabtApiClient.git",
-                "reference": "181b688553eae3210645a3f3ebae5608ab5ebd71"
+                "reference": "8bfafacfab346e9acdb6ff3247abe1219467b46c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yoerioptr/TabtApiClient/zipball/181b688553eae3210645a3f3ebae5608ab5ebd71",
-                "reference": "181b688553eae3210645a3f3ebae5608ab5ebd71",
+                "url": "https://api.github.com/repos/yoerioptr/TabtApiClient/zipball/8bfafacfab346e9acdb6ff3247abe1219467b46c",
+                "reference": "8bfafacfab346e9acdb6ff3247abe1219467b46c",
                 "shasum": ""
             },
             "require": {
@@ -9023,9 +9023,9 @@
             "description": "Helper library for the TabT API by Frenoy. For more information visit 'http://api.frenoy.net/'",
             "support": {
                 "issues": "https://github.com/yoerioptr/TabtApiClient/issues",
-                "source": "https://github.com/yoerioptr/TabtApiClient/tree/2.2.0"
+                "source": "https://github.com/yoerioptr/TabtApiClient/tree/v2.2.1"
             },
-            "time": "2026-09-20T06:52:31+00:00"
+            "time": "2026-09-24T18:23:21+00:00"
         }
     ],
     "packages-dev": [
@@ -11603,5 +11603,5 @@
         "ext-iconv": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }

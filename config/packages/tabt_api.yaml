@@ -31,10 +31,12 @@ tabt_api:
                         ShowDivisionName: "yes"
                 fields:
                     MatchId: matchId
+                    MatchUniqueId: matchUniqueId
                     WeekName: weekName
                     Date: date
                     Time: time
                     Venue: venue
+                    VenueEntry: venueEntry
                     HomeClub: homeClub
                     HomeTeam: homeTeam
                     AwayClub: awayClub

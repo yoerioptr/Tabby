@@ -21,13 +21,13 @@ final class CalendarControllerTest extends KernelTestCase
 
         $container = static::getContainer();
         $container->set(ClientInterface::class, new FakeTabtClient([
-            'MatchCount' => 2,
+            'MatchCount' => 3,
             'TeamMatchesEntries' => [
                 [
                     'MatchId' => 'LK058H001',
                     'WeekName' => 'Week 1',
                     'Date' => '2025-09-15',
-                    'Time' => '20:00',
+                    'Time' => '20:00:00',
                     'Venue' => 1,
                     'HomeClub' => 'LK058',
                     'HomeTeam' => 'Tabby A',
@@ -52,6 +52,19 @@ final class CalendarControllerTest extends KernelTestCase
                     'DivisionName' => 'Nationale 3A',
                     'IsValidated' => false,
                 ],
+                [
+                    'MatchId' => 'LK058H003',
+                    'WeekName' => 'Week 3',
+                    'Time' => '20:00:00',
+                    'HomeClub' => 'LK058',
+                    'HomeTeam' => 'Tabby B',
+                    'AwayClub' => 'OP456',
+                    'AwayTeam' => 'Unscheduled Rivals',
+                    'Score' => '',
+                    'DivisionId' => 12,
+                    'DivisionName' => 'Nationale 3A',
+                    'IsValidated' => false,
+                ],
             ],
         ]));
 
@@ -61,14 +74,22 @@ final class CalendarControllerTest extends KernelTestCase
         $repository = $container->get(MatchRepository::class);
         $matches = $repository->findAll();
 
-        self::assertCount(2, $matches);
+        self::assertCount(3, $matches);
         self::assertContainsOnlyInstancesOf(CompetitionMatch::class, $matches);
-        self::assertSame('LK058H001', $matches[0]->getMatchId());
-        self::assertSame('Tabby A', $matches[0]->getHomeTeam());
-        self::assertSame('Rivals A', $matches[1]->getHomeTeam());
-        self::assertSame('Nationale 3A', $matches[0]->getDivisionName());
+
+        $byId = [];
+
+        foreach ($matches as $match) {
+            $byId[$match->getMatchId()] = $match;
+        }
+
+        self::assertSame('Tabby A', $byId['LK058H001']->getHomeTeam());
+        self::assertSame('Rivals A', $byId['OP123H002']->getHomeTeam());
+        self::assertSame('Nationale 3A', $byId['LK058H001']->getDivisionName());
         // The API omits `Venue` for matches that are not scheduled yet.
-        self::assertNull($matches[1]->getVenue());
+        self::assertNull($byId['OP123H002']->getVenue());
+        // Matches without a date are not scheduled yet.
+        self::assertNull($byId['LK058H003']->getDate());
 
         $controller = $container->get(CalendarController::class);
         $response = $controller->index();
@@ -80,5 +101,11 @@ final class CalendarControllerTest extends KernelTestCase
         self::assertStringContainsString('Rivals A', $html);
         self::assertStringContainsString('symfony--ux-react--react', $html);
         self::assertStringContainsString('Calendar', $html);
+        self::assertStringContainsString('LK058H001', $html);
+        self::assertStringContainsString('20:00', $html);
+        self::assertStringNotContainsString('20:00:00', $html);
+        self::assertStringNotContainsString('Unscheduled Rivals', $html);
+        self::assertStringNotContainsString('LK058H003', $html);
+        self::assertStringNotContainsString('TBC', $html);
     }
 }

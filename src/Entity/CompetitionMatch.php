@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Yoerioptr\TabtApiClient\Entries\VenueEntry;
+
 final class CompetitionMatch
 {
+    private const int MATCH_DURATION_SECONDS = 10800;
+
     private ?string $matchId = null;
+
+    private ?int $matchUniqueId = null;
 
     private ?string $weekName = null;
 
@@ -15,6 +21,8 @@ final class CompetitionMatch
     private ?string $time = null;
 
     private ?int $venue = null;
+
+    private ?VenueEntry $venueEntry = null;
 
     private ?string $homeClub = null;
 
@@ -44,6 +52,18 @@ final class CompetitionMatch
         return $this;
     }
 
+    public function getMatchUniqueId(): ?int
+    {
+        return $this->matchUniqueId;
+    }
+
+    public function setMatchUniqueId(?int $matchUniqueId): static
+    {
+        $this->matchUniqueId = $matchUniqueId;
+
+        return $this;
+    }
+
     public function getWeekName(): ?string
     {
         return $this->weekName;
@@ -54,6 +74,15 @@ final class CompetitionMatch
         $this->weekName = $weekName;
 
         return $this;
+    }
+
+    public function getDisplayWeekName(): ?string
+    {
+        if (null === $this->weekName) {
+            return null;
+        }
+
+        return ctype_digit($this->weekName) ? (string) (int) $this->weekName : $this->weekName;
     }
 
     public function getDate(): ?string
@@ -80,6 +109,19 @@ final class CompetitionMatch
         return $this;
     }
 
+    public function getDisplayTime(): ?string
+    {
+        if (null === $this->time) {
+            return null;
+        }
+
+        try {
+            return (new \DateTimeImmutable($this->time))->format('H:i');
+        } catch (\Exception) {
+            return $this->time;
+        }
+    }
+
     public function getVenue(): ?int
     {
         return $this->venue;
@@ -88,6 +130,18 @@ final class CompetitionMatch
     public function setVenue(?int $venue): static
     {
         $this->venue = $venue;
+
+        return $this;
+    }
+
+    public function getVenueEntry(): ?VenueEntry
+    {
+        return $this->venueEntry;
+    }
+
+    public function setVenueEntry(?VenueEntry $venueEntry): static
+    {
+        $this->venueEntry = $venueEntry;
 
         return $this;
     }
@@ -194,12 +248,46 @@ final class CompetitionMatch
             return null;
         }
 
-        $value = $this->date.' '.($this->time ?? '00:00');
+        $value = $this->date . ' ' . ($this->time ?? '00:00');
 
         try {
             return new \DateTimeImmutable($value);
         } catch (\Exception) {
             return null;
         }
+    }
+
+    public function getEndDateTime(): ?\DateTimeImmutable
+    {
+        $start = $this->getDateTime();
+
+        if (null === $start) {
+            return null;
+        }
+
+        return $start->modify(sprintf('+%d seconds', self::MATCH_DURATION_SECONDS));
+    }
+
+    public function isPast(): bool
+    {
+        $end = $this->getEndDateTime();
+
+        return null !== $end && $end < new \DateTimeImmutable();
+    }
+
+    public function isOngoing(): bool
+    {
+        $start = $this->getDateTime();
+        $end = $this->getEndDateTime();
+        $now = new \DateTimeImmutable();
+
+        return null !== $start && null !== $end && $start <= $now && $now <= $end;
+    }
+
+    public function isUpcoming(): bool
+    {
+        $start = $this->getDateTime();
+
+        return null !== $start && $start > new \DateTimeImmutable();
     }
 }

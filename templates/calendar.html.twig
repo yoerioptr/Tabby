@@ -46,7 +46,7 @@
                                 {% for match in matches %}
                                     <tr>
                                         <td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-0 dark:text-white">{{ match.date ? match.date|date('D j M Y') : 'TBC' }}</td>
-                                        <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ match.time ?? '—' }}</td>
+                                        <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ match.displayTime ?? '—' }}</td>
                                         <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ match.homeTeam }}</td>
                                         <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ match.awayTeam }}</td>
                                         <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ match.score ?: '—' }}</td>

@@ -176,7 +176,7 @@ export default function CalendarView({ events = [] }: Props) {
     return (
         <div className="mx-auto max-w-6xl">
             <div className="rounded-xl border border-gray-300 bg-white p-4 text-gray-700 shadow-md dark:border-white/10 dark:bg-gray-800 dark:text-gray-200">
-                <div className="h-[40rem]">
+                <div className="h-[50rem]">
                     <Calendar<CalendarEvent>
                         localizer={localizer}
                         events={calendarEvents}
@@ -219,14 +219,21 @@ export default function CalendarView({ events = [] }: Props) {
 
                         <div className="flex items-center gap-2">
                             <span
-                                className={`inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                                    selected.resource.isHome
+                                className={`inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-xs font-medium ${selected.resource.isHome
                                         ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300'
                                         : 'bg-gray-100 text-gray-600 dark:bg-white/5 dark:text-gray-300'
-                                }`}
+                                    }`}
                             >
                                 {selected.resource.isHome ? 'Home' : 'Away'}
                             </span>
+                            {selected.resource.id && (
+                                <a
+                                    href={`/match/${selected.resource.id}`}
+                                    className="rounded-md bg-indigo-600 px-2.5 py-1 text-xs font-semibold text-white transition hover:bg-indigo-500"
+                                >
+                                    View match
+                                </a>
+                            )}
                             <button
                                 type="button"
                                 onClick={() => setSelected(null)}
