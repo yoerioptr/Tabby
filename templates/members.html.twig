@@ -32,7 +32,9 @@
                                 {% for member in members %}
                                     <tr>
                                         <td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-0 dark:text-white">{{ member.id }}</td>
-                                        <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ member.firstName }}</td>
+                                        <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">
+                                            <a href="{{ path('app_member', {id: member.id}) }}" class="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">{{ member.firstName }}</a>
+                                        </td>
                                         <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ member.lastName }}</td>
                                         <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ member.ranking }}</td>
                                     </tr>
