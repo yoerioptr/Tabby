@@ -1,3 +1,47 @@
 tabt_api:
     username: "%env(TABT_USERNAME)%"
     password: "%env(TABT_PASSWORD)%"
+
+    doctrine:
+        mappings:
+            members:
+                entity: App\Entity\Member
+                identifier: id
+                source:
+                    repository: member
+                    method: listMembersBy
+                    entries: getMemberEntries
+                    parameters:
+                        Club: "%env(TABT_CLUB)%"
+                fields:
+                    UniqueIndex: id
+                    FirstName: firstName
+                    LastName: lastName
+                    Ranking: ranking
+                    Club: clubId
+            matches:
+                entity: App\Entity\CompetitionMatch
+                identifier: matchId
+                source:
+                    repository: match
+                    method: listMatchesBy
+                    entries: getTeamMatchesEntries
+                    parameters:
+                        Club: "%env(TABT_CLUB)%"
+                        ShowDivisionName: "yes"
+                fields:
+                    MatchId: matchId
+                    MatchUniqueId: matchUniqueId
+                    WeekName: weekName
+                    Date: date
+                    Time: time
+                    Venue: venue
+                    VenueEntry: venueEntry
+                    HomeClub: homeClub
+                    HomeTeam: homeTeam
+                    AwayClub: awayClub
+                    AwayTeam: awayTeam
+                    Score: score
+                    DivisionId: divisionId
+                    DivisionName: divisionName
+                    IsValidated: isValidated

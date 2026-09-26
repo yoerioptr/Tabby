@@ -3,6 +3,9 @@ framework:
         # The paths to make available to the asset mapper.
         paths:
             - assets/
+        # The Tailwind source is compiled to assets/build/app.css by pnpm.
+        excluded_patterns:
+            - '*/assets/styles/app.css'
         missing_import_mode: strict
 
 when@prod:

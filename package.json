@@ -1,0 +1,25 @@
+{
+    "name": "tabby",
+    "private": true,
+    "license": "proprietary",
+    "packageManager": "pnpm@12.6.0",
+    "scripts": {
+        "build": "pnpm run build:react && pnpm run build:styles",
+        "build:react": "tsc",
+        "build:styles": "mkdir -p ./assets/build && tailwindcss -i ./assets/styles/app.css -o ./assets/build/app.css --minify",
+        "watch": "concurrently --kill-others -n react,styles -c blue,magenta \"pnpm run watch:react\" \"pnpm run watch:styles\"",
+        "watch:react": "tsc --watch",
+        "watch:styles": "mkdir -p ./assets/build && tailwindcss -i ./assets/styles/app.css -o ./assets/build/app.css --watch",
+        "typecheck": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "@tailwindcss/cli": "^4.3.3",
+        "@types/react": "^18.3.0",
+        "@types/react-big-calendar": "^1.16.0",
+        "@types/react-dom": "^18.3.0",
+        "concurrently": "^10.0.5",
+        "date-fns": "^4.1.0",
+        "tailwindcss": "^4.3.3",
+        "typescript": "^5.9.0"
+    }
+}

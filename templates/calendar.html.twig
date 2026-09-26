@@ -1,0 +1,63 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="px-4 sm:px-6 lg:px-8">
+        <div class="sm:flex sm:items-center">
+            <div class="sm:flex-auto">
+                <h1 class="text-base font-semibold text-gray-900 dark:text-white">{{ title }}</h1>
+                <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">All matches for your club in one overview.</p>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <div {{ react_component('Calendar', { events: events }) }}>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Loading calendar…</p>
+            </div>
+        </div>
+
+        <div class="mt-10 sm:flex sm:items-center">
+            <div class="sm:flex-auto">
+                <h2 class="text-base font-semibold text-gray-900 dark:text-white">All matches</h2>
+            </div>
+        </div>
+
+        {% if matches is empty %}
+            <div class="mt-8 rounded-md bg-blue-50 p-4 dark:bg-blue-500/10 dark:outline dark:outline-blue-500/20">
+                <p class="text-sm text-blue-700 dark:text-blue-300">No matches found.</p>
+            </div>
+        {% else %}
+            <div class="mt-8 flow-root">
+                <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                        <table class="relative min-w-full divide-y divide-gray-300 dark:divide-white/15">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0 dark:text-white">Date</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Time</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Home</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Away</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Score</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Division</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-white/10">
+                                {% for match in matches %}
+                                    <tr>
+                                        <td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-0 dark:text-white">{{ match.date ? match.date|date('D j M Y') : 'TBC' }}</td>
+                                        <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ match.displayTime ?? '—' }}</td>
+                                        <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ match.homeTeam }}</td>
+                                        <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ match.awayTeam }}</td>
+                                        <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ match.score ?: '—' }}</td>
+                                        <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ match.divisionName ?? '—' }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

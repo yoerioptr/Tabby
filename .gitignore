@@ -19,6 +19,14 @@
 /assets/vendor/
 ###< symfony/asset-mapper ###
 
+###> symfony/ux-react ###
+/assets/build/
+###< symfony/ux-react ###
+
+###> node ###
+/node_modules/
+###< node ###
+
 # PHP CS Fixer configuration
 /.*-cs-fixer.cache
 /.*-cs-fixer.php
