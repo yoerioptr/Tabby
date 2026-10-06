@@ -4,27 +4,65 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Dto\MemberFilter;
 use App\Entity\Member;
-use Yoerioptr\TabtApiBundle\Doctrine\ApiFetcher;
-use Yoerioptr\TabtApiBundle\Doctrine\EntityHydrator;
-use Yoerioptr\TabtApiBundle\Doctrine\MappingRegistry;
-use Yoerioptr\TabtApiBundle\Repository\AbstractTabtRepository;
+use App\Service\RankingScale;
 
-/**
- * @extends AbstractTabtRepository<Member>
- */
-final class MemberRepository extends AbstractTabtRepository
+/** @extends TabtRepository<Member> */
+final class MemberRepository extends TabtRepository
 {
-    public function __construct(
-        MappingRegistry $mappings,
-        EntityHydrator $hydrator,
-        ApiFetcher $fetcher,
-    ) {
-        parent::__construct($mappings, $hydrator, $fetcher);
-    }
-
-    protected function getEntityClass(): string
+    #[\Override]
+    protected function modelClass(): string
     {
         return Member::class;
+    }
+
+    public function find(int $id): ?Member
+    {
+        $rows = $this->query()
+            ->where('id = :id')
+            ->setParameter('id', $id)
+            ->executeQuery()
+            ->fetchAllAssociative();
+
+        return $this->hydrate($rows)[0] ?? null;
+    }
+
+    /**
+     * @return list<Member>
+     */
+    public function findByFilter(MemberFilter $filter): array
+    {
+        $query = $this->query();
+
+        if ('' !== ($name = trim((string) $filter->name))) {
+            $query
+                ->andWhere('(LOWER(firstName) LIKE :name OR LOWER(lastName) LIKE :name)')
+                ->setParameter('name', '%' . mb_strtolower($name) . '%');
+        }
+
+        if ('' !== ($ranking = trim((string) $filter->ranking))) {
+            $query
+                ->andWhere('ranking = :ranking')
+                ->setParameter('ranking', $ranking);
+        }
+
+        return $this->hydrate($query->executeQuery()->fetchAllAssociative());
+    }
+
+    /**
+     * Distinct rankings held by the members, ordered from strongest to weakest.
+     *
+     * @return list<string>
+     */
+    public function distinctRankings(): array
+    {
+        $rankings = $this->query()
+            ->select('DISTINCT ranking')
+            ->where("ranking IS NOT NULL AND ranking <> ''")
+            ->executeQuery()
+            ->fetchFirstColumn();
+
+        return RankingScale::sort($rankings);
     }
 }

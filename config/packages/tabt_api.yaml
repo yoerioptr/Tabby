@@ -2,6 +2,9 @@ tabt_api:
     username: "%env(TABT_USERNAME)%"
     password: "%env(TABT_PASSWORD)%"
 
+    read_model:
+        enabled: true
+
     doctrine:
         mappings:
             members:
