@@ -158,7 +158,7 @@ final class MemberPerformanceProvider
                 continue;
             }
 
-            $weight = $this->rankingWeight($ranking);
+            $weight = RankingScale::weight($ranking);
 
             if (null === $strongestWeight || $weight > $strongestWeight) {
                 $strongest = $ranking;
@@ -208,34 +208,12 @@ final class MemberPerformanceProvider
 
             usort(
                 $rows,
-                fn (array $a, array $b): int => $this->rankingWeight($b['ranking']) <=> $this->rankingWeight($a['ranking']),
+                static fn (array $a, array $b): int => RankingScale::weight($b['ranking']) <=> RankingScale::weight($a['ranking']),
             );
 
             $result[$uniqueIndex] = $rows;
         }
 
         return $result;
-    }
-
-    /**
-     * Higher weight means a stronger ranking. A0 is stronger than B6 and NG is
-     * the weakest of all.
-     */
-    private function rankingWeight(string $ranking): int
-    {
-        $ranking = trim($ranking);
-
-        if ('' === $ranking || 'NG' === strtoupper($ranking)) {
-            return -1;
-        }
-
-        if (str_contains($ranking, '+')) {
-            return PHP_INT_MAX;
-        }
-
-        $letter = strtoupper($ranking[0]);
-        $number = (int) substr($ranking, 1);
-
-        return (\ord('Z') - \ord($letter)) * 100 - $number;
     }
 }

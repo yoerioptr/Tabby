@@ -23,10 +23,7 @@ final class CalendarController extends AbstractController
     #[Route('/calendar', name: 'app_calendar')]
     public function index(): Response
     {
-        $matches = array_values(array_filter(
-            $this->matchRepository->findBy([], ['date' => 'ASC']),
-            static fn (CompetitionMatch $match): bool => null !== $match->getDate() && '' !== $match->getDate(),
-        ));
+        $matches = $this->matchRepository->findByDate();
 
         return $this->render('calendar.html.twig', [
             'title' => 'Calendar',

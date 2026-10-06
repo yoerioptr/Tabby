@@ -74,6 +74,61 @@ final class MembersControllerTest extends KernelTestCase
         $controller->show(999999);
     }
 
+    public function testItFiltersMembersByRanking(): void
+    {
+        $container = $this->bootWithMembers();
+
+        $response = $this->index($container, ['member_filter' => ['ranking' => 'D4']]);
+
+        self::assertSame(200, $response->getStatusCode());
+
+        $html = (string) $response->getContent();
+
+        self::assertStringContainsString('TOM', $html);
+        self::assertStringNotContainsString('PAUL', $html);
+    }
+
+    public function testItFiltersMembersByNameCaseInsensitively(): void
+    {
+        $container = $this->bootWithMembers();
+
+        $response = $this->index($container, ['member_filter' => ['name' => 'bAeNs']]);
+
+        self::assertSame(200, $response->getStatusCode());
+
+        $html = (string) $response->getContent();
+
+        self::assertStringContainsString('PAUL', $html);
+        self::assertStringNotContainsString('TOM', $html);
+    }
+
+    public function testItRendersRankingOptionsFromBestToWorst(): void
+    {
+        $container = $this->bootWithMembers();
+
+        $response = $this->index($container, []);
+
+        $html = (string) $response->getContent();
+
+        self::assertMatchesRegularExpression(
+            '/value="D2"[^>]*>D2<\/option>.*value="D4"[^>]*>D4<\/option>/s',
+            $html,
+        );
+    }
+
+    /**
+     * @param array<string, mixed> $query
+     */
+    private function index(
+        \Symfony\Component\DependencyInjection\ContainerInterface $container,
+        array $query,
+    ): \Symfony\Component\HttpFoundation\Response {
+        $requestStack = $container->get(RequestStack::class);
+        $requestStack->push(Request::create('/members', 'GET', $query));
+
+        return $container->get(MembersController::class)->index($requestStack->getCurrentRequest());
+    }
+
     private function bootWithMembers(): \Symfony\Component\DependencyInjection\ContainerInterface
     {
         self::bootKernel();
