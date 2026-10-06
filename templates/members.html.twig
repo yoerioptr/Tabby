@@ -90,10 +90,10 @@
                             </thead>
                             <tbody class="divide-y divide-gray-200 dark:divide-white/10">
                                 {% for member in members %}
-                                    <tr>
+                                    <tr class="relative cursor-pointer transition-colors hover:bg-gray-50 focus-within:bg-gray-50 dark:hover:bg-white/5 dark:focus-within:bg-white/5">
                                         <td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-0 dark:text-white">{{ member.id }}</td>
                                         <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">
-                                            <a href="{{ path('app_member', {id: member.id}) }}" class="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">{{ member.firstName }}</a>
+                                            <a href="{{ path('app_member', {id: member.id}) }}" aria-label="{{ member.firstName }} {{ member.lastName }}" class="font-medium text-indigo-600 after:absolute after:inset-0 hover:text-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-300 dark:focus-visible:outline-indigo-500">{{ member.firstName }}</a>
                                         </td>
                                         <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ member.lastName }}</td>
                                         <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">{{ member.ranking }}</td>
