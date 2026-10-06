@@ -1,5 +1,31 @@
 {% extends 'layout.html.twig' %}
 
+{% macro sort_header(label, column, currentSort, query, classes) %}
+    {% set active = currentSort.field == column %}
+    {% set descending = currentSort.direction.value == 'desc' %}
+
+    {% if active %}
+        {% set next = query|merge({sort: column, direction: descending ? 'asc' : 'desc'}) %}
+    {% else %}
+        {% set next = query|merge({sort: column, direction: 'asc'}) %}
+    {% endif %}
+
+    <a href="{{ path('app_members', next) }}" class="group flex w-full items-center justify-between gap-x-2 {{ classes }} hover:text-gray-500 dark:hover:text-gray-300">
+        <span>{{ label }}</span>
+        {% if active %}
+            {% if descending %}
+                <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-4 shrink-0 text-gray-500 dark:text-gray-400">
+                    <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                </svg>
+            {% else %}
+                <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-4 shrink-0 text-gray-500 dark:text-gray-400">
+                    <path fill-rule="evenodd" d="M14.78 11.78a.75.75 0 0 1-1.06 0L10 8.06l-3.72 3.72a.75.75 0 0 1-1.06-1.06l4.25-4.25a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06Z" clip-rule="evenodd" />
+                </svg>
+            {% endif %}
+        {% endif %}
+    </a>
+{% endmacro %}
+
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
@@ -10,6 +36,9 @@
                 <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">A list of all members of your club.</p>
 
                 {{ form_start(filterForm, {attr: {class: 'mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2'}}) }}
+                    <input type="hidden" name="sort" value="{{ sort.field }}">
+                    <input type="hidden" name="direction" value="{{ sort.direction.value }}">
+
                     <div>
                         {{ form_label(filterForm.name, null, {label_attr: {class: 'block text-sm/6 font-medium text-gray-900 dark:text-gray-100'}}) }}
                         <div class="mt-2">
@@ -45,10 +74,18 @@
                         <table class="relative min-w-full divide-y divide-gray-300 dark:divide-white/15">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0 dark:text-white">#</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">First name</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Last name</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">Ranking</th>
+                                    <th scope="col">
+                                        {{ _self.sort_header('#', 'id', sort, app.request.query.all, 'py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0 dark:text-white') }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ _self.sort_header('First name', 'firstName', sort, app.request.query.all, 'px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white') }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ _self.sort_header('Last name', 'lastName', sort, app.request.query.all, 'px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white') }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ _self.sort_header('Ranking', 'ranking', sort, app.request.query.all, 'px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white') }}
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 dark:divide-white/10">

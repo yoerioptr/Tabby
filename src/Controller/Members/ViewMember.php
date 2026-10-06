@@ -2,19 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Members;
 
-use App\Dto\MemberFilter;
-use App\Form\MemberFilterType;
 use App\Repository\MemberRepository;
 use App\Service\MemberContactProvider;
 use App\Service\MemberPerformanceProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class MembersController extends AbstractController
+final class ViewMember extends AbstractController
 {
     public function __construct(
         private readonly MemberRepository $memberRepository,
@@ -24,28 +21,8 @@ final class MembersController extends AbstractController
         //
     }
 
-    #[Route('/members', name: 'app_members')]
-    public function index(Request $request): Response
-    {
-        $filter = new MemberFilter();
-        $form = $this->createForm(MemberFilterType::class, $filter, [
-            'rankings' => $this->memberRepository->distinctRankings(),
-        ]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $filter = $form->getData();
-        }
-
-        return $this->render('members.html.twig', [
-            'title' => 'Members',
-            'members' => $this->memberRepository->findByFilter($filter),
-            'filterForm' => $form->createView(),
-        ]);
-    }
-
     #[Route('/members/{id}', name: 'app_member', requirements: ['id' => '\d+'])]
-    public function show(int $id): Response
+    public function __invoke(int $id): Response
     {
         $member = $this->memberRepository->find($id);
 

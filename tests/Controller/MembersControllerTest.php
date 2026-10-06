@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\Controller\MembersController;
+use App\Controller\Members\ListMembers;
+use App\Controller\Members\ViewMember;
+use App\Dto\MemberSortQuery;
 use App\Tests\Fixtures\FakeTabtClient;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,8 +31,8 @@ final class MembersControllerTest extends KernelTestCase
         $requestStack = $container->get(RequestStack::class);
         $requestStack->push(Request::create('/members/'.self::MEMBER_ID));
 
-        $controller = $container->get(MembersController::class);
-        $response = $controller->show(self::MEMBER_ID);
+        $controller = $container->get(ViewMember::class);
+        $response = $controller(self::MEMBER_ID);
 
         self::assertSame(200, $response->getStatusCode());
 
@@ -67,11 +69,11 @@ final class MembersControllerTest extends KernelTestCase
     {
         $container = $this->bootWithMembers();
 
-        $controller = $container->get(MembersController::class);
+        $controller = $container->get(ViewMember::class);
 
         $this->expectException(NotFoundHttpException::class);
 
-        $controller->show(999999);
+        $controller(999999);
     }
 
     public function testItFiltersMembersByRanking(): void
@@ -116,6 +118,92 @@ final class MembersControllerTest extends KernelTestCase
         );
     }
 
+    public function testItFiltersMembersByFullIdThroughTheNameFilter(): void
+    {
+        $container = $this->bootWithMembers();
+
+        $response = $this->index($container, ['member_filter' => ['name' => (string) self::MEMBER_ID]]);
+
+        self::assertSame(200, $response->getStatusCode());
+
+        $html = (string) $response->getContent();
+
+        self::assertStringContainsString('PAUL', $html);
+        self::assertStringNotContainsString('TOM', $html);
+    }
+
+    public function testItFiltersMembersByPartialIdThroughTheNameFilter(): void
+    {
+        $container = $this->bootWithMembers();
+
+        $response = $this->index($container, ['member_filter' => ['name' => '516']]);
+
+        self::assertSame(200, $response->getStatusCode());
+
+        $html = (string) $response->getContent();
+
+        self::assertStringContainsString('TOM', $html);
+        self::assertStringNotContainsString('PAUL', $html);
+    }
+
+    public function testItSortsByRankingStrongestFirstByDefault(): void
+    {
+        $container = $this->bootWithMembers();
+
+        $response = $this->index($container, []);
+
+        $html = (string) $response->getContent();
+
+        // D2 is stronger than D4, so PAUL comes before TOM by default.
+        self::assertLessThan(
+            strpos($html, 'TOM'),
+            strpos($html, 'PAUL'),
+        );
+    }
+
+    public function testItSortsByIdAscending(): void
+    {
+        $container = $this->bootWithMembers();
+
+        $response = $this->index($container, ['sort' => 'id', 'direction' => 'asc']);
+
+        $html = (string) $response->getContent();
+
+        self::assertLessThan(
+            strpos($html, 'TOM'),
+            strpos($html, 'PAUL'),
+        );
+    }
+
+    public function testItSortsByLastNameDescending(): void
+    {
+        $container = $this->bootWithMembers();
+
+        $response = $this->index($container, ['sort' => 'lastName', 'direction' => 'desc']);
+
+        $html = (string) $response->getContent();
+
+        // DE RON sorts before BAENS when descending.
+        self::assertLessThan(
+            strpos($html, 'PAUL'),
+            strpos($html, 'TOM'),
+        );
+    }
+
+    public function testItRendersSortLinksWithDirectionParameters(): void
+    {
+        $container = $this->bootWithMembers();
+
+        $response = $this->index($container, []);
+
+        $html = (string) $response->getContent();
+
+        self::assertStringContainsString('sort=id', $html);
+        self::assertStringContainsString('direction=asc', $html);
+        self::assertStringContainsString('sort=ranking', $html);
+        self::assertStringContainsString('direction=desc', $html);
+    }
+
     /**
      * @param array<string, mixed> $query
      */
@@ -123,10 +211,14 @@ final class MembersControllerTest extends KernelTestCase
         \Symfony\Component\DependencyInjection\ContainerInterface $container,
         array $query,
     ): \Symfony\Component\HttpFoundation\Response {
-        $requestStack = $container->get(RequestStack::class);
-        $requestStack->push(Request::create('/members', 'GET', $query));
+        $request = Request::create('/members', 'GET', $query);
+        $container->get(RequestStack::class)->push($request);
 
-        return $container->get(MembersController::class)->index($requestStack->getCurrentRequest());
+        $sortQuery = new MemberSortQuery();
+        $sortQuery->sort = \is_string($query['sort'] ?? null) ? $query['sort'] : null;
+        $sortQuery->direction = \is_string($query['direction'] ?? null) ? $query['direction'] : null;
+
+        return $container->get(ListMembers::class)($request, $sortQuery);
     }
 
     private function bootWithMembers(): \Symfony\Component\DependencyInjection\ContainerInterface
